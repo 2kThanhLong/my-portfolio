@@ -1,33 +1,21 @@
-import MainLayout from "./components/layouts/MainLayout";
-import Hero from "./sections/Hero";
-import About from "./sections/About";
-import Skills from "./sections/Skills";
-import Projects from "./sections/Projects";
-import Contact from "./sections/Contact";
-import BackToTop from "./components/common/BackToTop";
-import { Toaster } from "react-hot-toast";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { NotFound } from "./pages/NotFound";
+import { Toaster } from "./components/ui/Toaster";
+import React from "react";
 
-const toastOptions = {
-  style: {
-    background: "#22282f",
-    color: "#fff",
-    border: "1px solid #13bbff",
-  },
-};
-
-const sections = [Hero, About, Skills, Projects, Contact];
-
-export default function App() {
+const App: React.FC = () => {
   return (
     <>
-      <MainLayout>
-        {sections.map((Section, idx) => (
-          <Section key={idx} />
-        ))}
-      </MainLayout>
-
-      <BackToTop />
-      <Toaster position="top-right" toastOptions={toastOptions} />
+      <Toaster />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
-}
+};
+
+export default App;

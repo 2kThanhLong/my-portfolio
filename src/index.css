@@ -1,49 +1,135 @@
 @import "tailwindcss";
 
-/* Slick arrows */
-.slick-prev,
-.slick-next {
-  width: auto !important;
-  height: auto !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  z-index: 20;
+@theme {
+  --color-border: hsl(var(--border));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-card: hsl(var(--card));
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.7s ease-out forwards;
+  --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
+  --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
+  --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
+  --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-subtle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
-.slick-prev:before,
-.slick-next:before {
-  color: #13bbff !important;
-  font-size: 28px !important;
-  opacity: 0.6 !important;
-  transition: all 0.2s ease;
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --primary: 250 47% 60%;
+    --primary-foreground: 210 40% 98%;
+    --border: 214 32% 91%;
+  }
+
+  .dark {
+    --background: 222 47% 4%;
+    --foreground: 213 31% 91%;
+    --card: 222 47% 8%;
+    --primary: 160 60% 45%;
+    --primary-foreground: 213 31% 91%;
+    --border: 217 33% 20%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
 }
 
-.slick-prev:hover:before,
-.slick-next:hover:before {
-  opacity: 1 !important;
-  text-shadow: 0 0 12px rgba(19, 187, 255, 0.6);
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+
+  @media (width >= 640px) {
+    max-width: 640px;
+  }
+  @media (width >= 768px) {
+    max-width: 768px;
+  }
+  @media (width >= 1024px) {
+    max-width: 1024px;
+  }
+  @media (width >= 1280px) {
+    max-width: 1280px;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
 }
 
-.slick-prev {
-  left: -40px !important;
+@utility text-glow {
+  @apply relative;
+  text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
 }
 
-.slick-next {
-  right: -40px !important;
+@utility card-hover {
+  @apply transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg;
 }
 
-/* Slick dots */
-.slick-dots {
-  bottom: -30px !important;
+@utility gradient-border {
+  @apply relative rounded-md;
+  background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
+  background-clip: padding-box;
+  border: 1px solid transparent;
 }
 
-.slick-dots li button:before {
-  font-size: 10px;
-  color: #6b7280 !important;
-  opacity: 1 !important;
+@utility custom-button {
+  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium transition-all duration-300 active:scale-95 hover:scale-105;
+  box-shadow: 0 0 0 transparent;
+
+  &:hover {
+    box-shadow: 0 0 6px hsl(var(--primary) / 0.3);
+  }
 }
 
-.slick-dots li.slick-active button:before {
-  color: #13bbff !important;
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
 }
